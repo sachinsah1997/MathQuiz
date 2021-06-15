@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.google.android.material.button.MaterialButton;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class QuizActivity extends AppCompatActivity {
@@ -40,11 +43,10 @@ public class QuizActivity extends AppCompatActivity {
 
         resultButton = findViewById(R.id.buttonResult);
 
-
-
         Intent intent = getIntent();
         String operationType = intent.getStringExtra("questionType");
         final int[] count = new int[3];
+        count[0] = 1;
         count[1] = questionGenerator(operationType, count[0]);
         new CountDownTimer(30000, 1000) {
 
@@ -61,21 +63,21 @@ public class QuizActivity extends AppCompatActivity {
 
                 textViewOptionTwo.setOnClickListener(v -> {
                     if(Integer.parseInt(textViewOptionTwo.getText().toString()) == count[1]){
-                        count[3]+=10;
+                        count[2]+=10;
                     }
                     onFinish();
                 });
 
                 textViewOptionThird.setOnClickListener(v -> {
                     if(Integer.parseInt(textViewOptionThird.getText().toString()) == count[1]){
-                        count[3]+=10;
+                        count[2]+=10;
                     }
                     onFinish();
                 });
 
                 textViewOptionFourth.setOnClickListener(v -> {
                     if(Integer.parseInt(textViewOptionFourth.getText().toString()) == count[1]){
-                        count[3]+=10;
+                        count[2]+=10;
                     }
                     onFinish();
                 });
@@ -84,8 +86,9 @@ public class QuizActivity extends AppCompatActivity {
             }
 
             public void onFinish() {
-                count[0] += 1;
-                if(count[0] <=10) {
+
+                if(count[0] <10) {
+                    count[0] += 1;
                     count[1] = questionGenerator(operationType, count[0]);
                     start();
                 }else{
@@ -104,7 +107,9 @@ public class QuizActivity extends AppCompatActivity {
         }.start();
 
         resultButton.setOnClickListener(v -> {
-
+            Intent intentResult = new Intent(getApplicationContext(), ResultActivity.class);
+            intentResult.putExtra("score", count[2]);
+            startActivity(intentResult);
         });
     }
 
@@ -131,10 +136,18 @@ public class QuizActivity extends AppCompatActivity {
                 textViewQuestion.setText(num1 + " / " + num2 + " ?");
                 result = num1 + num2;
             }
-            textViewOptionOne.setText(result + "");
-            textViewOptionTwo.setText(result + 5 + "");
-            textViewOptionThird.setText(result - 3 + "");
-            textViewOptionFourth.setText(result - 10 + "");
+
+            ArrayList<String> optionList = new ArrayList<>();
+            optionList.add(result+"");
+            optionList.add(result+5+"");
+            optionList.add(result-6+"");
+            optionList.add(result+10+"");
+
+        Collections.shuffle(optionList);
+        textViewOptionOne.setText(optionList.get(0));
+            textViewOptionTwo.setText(optionList.get(1));
+            textViewOptionThird.setText(optionList.get(2));
+            textViewOptionFourth.setText(optionList.get(3));
 
             return result;
         }

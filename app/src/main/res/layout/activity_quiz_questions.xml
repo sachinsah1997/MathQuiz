@@ -150,7 +150,7 @@
             android:id="@+id/buttonResult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="view result"
+            android:text="view score"
             android:layout_marginTop="16dp"
             android:textColor="@android:color/white"
             android:textSize="25sp"
