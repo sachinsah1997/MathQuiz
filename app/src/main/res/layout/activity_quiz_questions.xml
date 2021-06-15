@@ -25,7 +25,7 @@
             android:orientation="horizontal">
 
             <ProgressBar
-                android:id="@+id/progressBarQuestion"
+                android:id="@+id/progressBarQuestionCount"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
                 android:progress="0"/>
 
             <TextView
-                android:id="@+id/textViewQuestion"
+                android:id="@+id/textViewQuestionCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -47,7 +47,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_question"
+            android:id="@+id/textViewQuestion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -63,10 +63,11 @@
             tools:context=".QuizActivity">
 
             <ProgressBar
-                android:id="@+id/progress_bar"
+                android:id="@+id/progressBarTimer"
                 style="@style/CircularDeterminateProgressBar"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:max="30"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -74,14 +75,14 @@
                 tools:progress="100" />
 
             <TextView
-                android:id="@+id/text_view_progress"
+                android:id="@+id/tv_progress_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                app:layout_constraintBottom_toBottomOf="@+id/progress_bar"
-                app:layout_constraintEnd_toEndOf="@+id/progress_bar"
-                app:layout_constraintStart_toStartOf="@+id/progress_bar"
-                app:layout_constraintTop_toTopOf="@+id/progress_bar"
+                app:layout_constraintBottom_toBottomOf="@+id/progressBarTimer"
+                app:layout_constraintEnd_toEndOf="@+id/progressBarTimer"
+                app:layout_constraintStart_toStartOf="@+id/progressBarTimer"
+                app:layout_constraintTop_toTopOf="@+id/progressBarTimer"
                 tools:text="20" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -146,13 +147,14 @@
             app:cornerRadius="20dp"/>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/ma_continue"
+            android:id="@+id/buttonResult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Continue"
+            android:text="view result"
             android:layout_marginTop="16dp"
             android:textColor="@android:color/white"
             android:textSize="25sp"
+            android:visibility="gone"
             app:cornerRadius="20dp" />
 
     </LinearLayout>

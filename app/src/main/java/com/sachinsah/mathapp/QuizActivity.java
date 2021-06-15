@@ -1,16 +1,23 @@
 package com.sachinsah.mathapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import com.google.android.material.button.MaterialButton;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class QuizActivity extends AppCompatActivity {
 
-    private TextView textViewQuestion;
-    private ProgressBar progressBarQuestion;
+    private TextView textViewQuestionCount, textViewQuestion;
+    private ProgressBar progressBarQuestionCount, progressBarTimer;
+    private TextView textViewOptionOne, textViewOptionTwo, textViewOptionThird, textViewOptionFourth;
+    private TextView textViewProgressTimer;
+    private MaterialButton resultButton;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -18,15 +25,117 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_questions);
 
+        textViewQuestionCount = findViewById(R.id.textViewQuestionCount);
+        progressBarQuestionCount = findViewById(R.id.progressBarQuestionCount);
+
         textViewQuestion = findViewById(R.id.textViewQuestion);
-        progressBarQuestion = findViewById(R.id.progressBarQuestion);
+        textViewOptionOne = findViewById(R.id.tv_option_one);
+        textViewOptionTwo = findViewById(R.id.tv_option_two);
+        textViewOptionThird = findViewById(R.id.tv_option_three);
+        textViewOptionFourth = findViewById(R.id.tv_option_four);
 
-        for(int question = 1; question<=10; question++){
+        progressBarTimer = findViewById(R.id.progressBarTimer);
+        textViewProgressTimer = findViewById(R.id.tv_progress_time);
 
-            textViewQuestion.setText(question + "/" + 10);
-            progressBarQuestion.setProgress(question);
 
-        }
+        resultButton = findViewById(R.id.buttonResult);
 
+
+
+        Intent intent = getIntent();
+        String operationType = intent.getStringExtra("questionType");
+        final int[] count = new int[3];
+        count[1] = questionGenerator(operationType, count[0]);
+        new CountDownTimer(30000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                textViewProgressTimer.setText("" + (millisUntilFinished/1000));
+                progressBarTimer.setProgress((int) (millisUntilFinished/1000));
+
+                textViewOptionOne.setOnClickListener(v -> {
+                        if(Integer.parseInt(textViewOptionOne.getText().toString()) == count[1]){
+                               count[2]+=10;
+                        }
+                        onFinish();
+                });
+
+                textViewOptionTwo.setOnClickListener(v -> {
+                    if(Integer.parseInt(textViewOptionTwo.getText().toString()) == count[1]){
+                        count[3]+=10;
+                    }
+                    onFinish();
+                });
+
+                textViewOptionThird.setOnClickListener(v -> {
+                    if(Integer.parseInt(textViewOptionThird.getText().toString()) == count[1]){
+                        count[3]+=10;
+                    }
+                    onFinish();
+                });
+
+                textViewOptionFourth.setOnClickListener(v -> {
+                    if(Integer.parseInt(textViewOptionFourth.getText().toString()) == count[1]){
+                        count[3]+=10;
+                    }
+                    onFinish();
+                });
+
+
+            }
+
+            public void onFinish() {
+                count[0] += 1;
+                if(count[0] <=10) {
+                    count[1] = questionGenerator(operationType, count[0]);
+                    start();
+                }else{
+                    textViewQuestion.setVisibility(View.GONE);
+                    textViewProgressTimer.setVisibility(View.GONE);
+                    progressBarTimer.setVisibility(View.GONE);
+
+                    textViewOptionOne.setVisibility(View.GONE);
+                    textViewOptionTwo.setVisibility(View.GONE);
+                    textViewOptionThird.setVisibility(View.GONE);
+                    textViewOptionFourth.setVisibility(View.GONE);
+
+                    resultButton.setVisibility(View.VISIBLE);
+                }
+            }
+        }.start();
+
+        resultButton.setOnClickListener(v -> {
+
+        });
     }
+
+    @SuppressLint("SetTextI18n")
+    protected int questionGenerator(String operator, int count) {
+
+            textViewQuestionCount.setText(count + "/" + 10);
+            progressBarQuestionCount.setProgress(count);
+
+            int num1 = ThreadLocalRandom.current().nextInt(0, 100);
+            int num2 = ThreadLocalRandom.current().nextInt(0, 100);
+            int result = 0;
+
+            if(operator.equals("add")) {
+                textViewQuestion.setText(num1 + " + " + num2 + " ?");
+                result = num1 + num2;
+            }else if(operator.equals("sub")) {
+                textViewQuestion.setText(num1 + " - " + num2 + " ?");
+                result = num1 + num2;
+            }else if(operator.equals("mul")) {
+                textViewQuestion.setText(num1 + " * " + num2 + " ?");
+                result = num1 + num2;
+            }else if(operator.equals("div")) {
+                textViewQuestion.setText(num1 + " / " + num2 + " ?");
+                result = num1 + num2;
+            }
+            textViewOptionOne.setText(result + "");
+            textViewOptionTwo.setText(result + 5 + "");
+            textViewOptionThird.setText(result - 3 + "");
+            textViewOptionFourth.setText(result - 10 + "");
+
+            return result;
+        }
 }
