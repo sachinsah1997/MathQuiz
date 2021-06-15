@@ -9,7 +9,6 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.MathApp">
-
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,8 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".DashboardActivity"/>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".DashboardActivity" />
+        <activity android:name=".QuizActivity"/>
     </application>
 
 </manifest>

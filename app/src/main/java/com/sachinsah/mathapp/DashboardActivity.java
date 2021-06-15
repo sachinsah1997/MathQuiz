@@ -1,8 +1,11 @@
 package com.sachinsah.mathapp;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class DashboardActivity extends AppCompatActivity {
 
     private TextView textViewName;
+    private RelativeLayout relativeLayoutAddition, relativeLayoutSubtract, relativeLayoutMultiply, relativeLayoutDivision;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -28,5 +32,30 @@ public class DashboardActivity extends AppCompatActivity {
         // We can then use the data
         textViewName = findViewById(R.id.textViewName);
         textViewName.setText(textViewName.getText().toString().trim() + " " + userName);
+
+
+        relativeLayoutAddition = findViewById(R.id.relativeLayoutAddition);
+        relativeLayoutSubtract = findViewById(R.id.relativeLayoutSubtract);
+        relativeLayoutMultiply = findViewById(R.id.relativeLayoutmultiply);
+        relativeLayoutDivision = findViewById(R.id.relativeLayoutDivision);
+
+        Intent intent = new Intent(getApplicationContext(), QuizActivity.class);
+
+        relativeLayoutAddition.setOnClickListener(v -> {
+            intent.putExtra("questionType", "add");
+            startActivity(intent);
+        });
+        relativeLayoutSubtract.setOnClickListener(v -> {
+            intent.putExtra("questionType", "sub");
+            startActivity(intent);
+        });
+        relativeLayoutMultiply.setOnClickListener(v -> {
+            intent.putExtra("questionType", "mul");
+            startActivity(intent);
+        });relativeLayoutDivision.setOnClickListener(v -> {
+            intent.putExtra("questionType", "div");
+            startActivity(intent);
+        });
+
     }
 }

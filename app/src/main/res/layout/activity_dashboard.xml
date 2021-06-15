@@ -50,6 +50,7 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1">
                 <RelativeLayout
+                    android:id="@+id/relativeLayoutAddition"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <TextView
@@ -78,6 +79,7 @@
                 android:layout_weight="1">
 
                 <RelativeLayout
+                    android:id="@+id/relativeLayoutSubtract"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -117,6 +119,7 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1">
                 <RelativeLayout
+                    android:id="@+id/relativeLayoutmultiply"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <TextView
@@ -143,6 +146,7 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1">
                 <RelativeLayout
+                    android:id="@+id/relativeLayoutDivision"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <TextView
